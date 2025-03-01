@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useInView } from "react-intersection-observer";
-import { FaChartLine, FaExchangeAlt, FaShieldAlt, FaCoins, FaTrophy } from "react-icons/fa";
+import { FaChartLine, FaExchangeAlt, FaShieldAlt, FaCoins, FaLightbulb, FaChartBar, FaRegChartBar } from "react-icons/fa";
 
 export default function HomePage() {
   const [selectedFeature, setSelectedFeature] = useState(null);
@@ -52,12 +52,6 @@ export default function HomePage() {
       title: "Creator Incentive Model",
       description: "Earn base earnings, performance bonuses, and referral commissions.",
       details: "Our three-tiered earnings model rewards basket creators generously. Earn Base Earnings as a percentage of returns from investors using your basket. Unlock Performance Bonuses when your baskets outperform market benchmarks. Generate Referral Commissions by bringing new users to the platform. This comprehensive incentive structure encourages creators to develop high-performing baskets, maintain active engagement, and help grow our community."
-    },
-    {
-      icon: <FaTrophy size={40} />,
-      title: "Gamification and Social Features",
-      description: "Leaderboards, challenges, and social engagement to enhance user retention.",
-      details: "Investing meets social competition with our engaging gamification elements. Climb our dynamic leaderboards ranked by returns, risk management, and basket popularity. Participate in time-limited 'Challenges' where you design baskets for specific goals like '10% growth in 6 months' - winners share in platform fee pools. Connect with other investors through comments, endorsements, and earn performance-based badges that showcase your investing expertise. These social elements keep users engaged and create a vibrant investment community."
     }
   ];
 
@@ -92,7 +86,7 @@ export default function HomePage() {
   const buttonVariants = {
     hover: {
       scale: 1.05,
-      boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.1)",
+      boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.2)",
       transition: {
         type: "spring",
         stiffness: 400,
@@ -106,7 +100,7 @@ export default function HomePage() {
 
   // Interactive background gradient based on mouse position
   const gradientStyle = {
-    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(59, 130, 246, 0.3) 0%, rgba(16, 185, 129, 0.1) 50%, rgba(30, 58, 138, 0.05) 100%)`,
+    background: `radial-gradient(circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(23, 37, 84, 0.7) 0%, rgba(220, 38, 38, 0.2) 50%, rgba(30, 58, 138, 0.1) 100%)`,
     position: "fixed",
     top: 0,
     left: 0,
@@ -117,12 +111,23 @@ export default function HomePage() {
   };
 
   // Floating elements
-  const floatingElements = Array(10).fill().map((_, i) => {
-    const size = Math.random() * 50 + 10;
+  const floatingElements = Array(15).fill().map((_, i) => {
+    const size = Math.random() * 60 + 10;
     const initialX = Math.random() * 100;
     const initialY = Math.random() * 100;
     const duration = Math.random() * 20 + 10;
     const delay = Math.random() * 5;
+    
+    // Use our color scheme
+    const colors = [
+      "rgba(23, 37, 84, 0.1)",  // Dark blue
+      "rgba(30, 58, 138, 0.1)",  // Blue
+      "rgba(220, 38, 38, 0.1)",  // Red
+      "rgba(185, 28, 28, 0.1)",  // Dark red
+      "rgba(0, 0, 0, 0.05)"      // Black
+    ];
+    
+    const color = colors[Math.floor(Math.random() * colors.length)];
 
     return (
       <motion.div
@@ -132,7 +137,7 @@ export default function HomePage() {
           width: size,
           height: size,
           borderRadius: "50%",
-          background: `rgba(${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, ${Math.floor(Math.random() * 255)}, 0.1)`,
+          background: color,
           top: `${initialY}%`,
           left: `${initialX}%`,
           zIndex: -1,
@@ -152,6 +157,70 @@ export default function HomePage() {
     );
   });
 
+  // Stock chart visualization
+  const StockChart = () => {
+    return (
+      <motion.div
+        style={{
+          position: "absolute",
+          right: "-5%",
+          top: "20%",
+          width: "300px",
+          height: "200px",
+          opacity: 0.2,
+          zIndex: 0
+        }}
+        initial={{ opacity: 0, x: 50 }}
+        animate={{ opacity: 0.2, x: 0 }}
+        transition={{ duration: 1, delay: 1 }}
+      >
+        <svg width="300" height="200" viewBox="0 0 300 200">
+          <path
+            d="M0,150 C20,130 40,180 60,120 C80,100 100,110 120,80 C140,60 160,90 180,40 C200,20 220,50 240,30 C260,40 280,10 300,30"
+            fill="none"
+            stroke="#DC2626"
+            strokeWidth="3"
+          />
+          <path
+            d="M0,170 C20,160 40,150 60,140 C80,160 100,130 120,120 C140,110 160,140 180,100 C200,90 220,110 240,80 C260,70 280,60 300,50"
+            fill="none"
+            stroke="#1E3A8A"
+            strokeWidth="3"
+          />
+        </svg>
+      </motion.div>
+    );
+  };
+
+  // Financial data visualization
+  const DataVisualization = () => {
+    return (
+      <motion.div
+        style={{
+          position: "absolute",
+          left: "-5%",
+          bottom: "15%",
+          width: "250px",
+          height: "250px",
+          opacity: 0.15,
+          zIndex: 0
+        }}
+        initial={{ opacity: 0, x: -50 }}
+        animate={{ opacity: 0.15, x: 0 }}
+        transition={{ duration: 1, delay: 1.5 }}
+      >
+        <svg width="250" height="250" viewBox="0 0 250 250">
+          <rect x="10" y="50" width="30" height="150" fill="#1E3A8A" />
+          <rect x="50" y="80" width="30" height="120" fill="#DC2626" />
+          <rect x="90" y="100" width="30" height="100" fill="#1E3A8A" />
+          <rect x="130" y="60" width="30" height="140" fill="#DC2626" />
+          <rect x="170" y="90" width="30" height="110" fill="#1E3A8A" />
+          <rect x="210" y="40" width="30" height="160" fill="#DC2626" />
+        </svg>
+      </motion.div>
+    );
+  };
+
   // Parallax effect for header
   const headerParallax = {
     y: scrollY * 0.3
@@ -161,9 +230,10 @@ export default function HomePage() {
     <div style={{ 
       minHeight: "100vh", 
       padding: "24px", 
-      background: "linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%)",
+      background: "#000000",
       position: "relative",
-      overflow: "hidden"
+      overflow: "hidden",
+      color: "#ffffff"
     }}>
       {/* Interactive background */}
       <div style={gradientStyle} />
@@ -172,6 +242,10 @@ export default function HomePage() {
       {floatingElements}
 
       <div style={{ maxWidth: "1200px", margin: "0 auto", position: "relative", zIndex: 1 }}>
+        {/* Visual elements */}
+        <StockChart />
+        <DataVisualization />
+        
         {/* Header with parallax effect */}
         <motion.div 
           style={{ 
@@ -186,14 +260,13 @@ export default function HomePage() {
         >
           <motion.h1 
             style={{ 
-              color: "#1E3A8A", 
               marginBottom: "24px", 
-              fontSize: "3.5rem",
+              fontSize: "3.8rem",
               fontWeight: "800",
-              background: "linear-gradient(to right, #1E3A8A, #3B82F6)",
+              background: "linear-gradient(to right, #DC2626, #1E3A8A)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
-              textShadow: "0 4px 12px rgba(30, 58, 138, 0.1)"
+              textShadow: "0 4px 12px rgba(220, 38, 38, 0.3)"
             }}
             animate={headerParallax}
           >
@@ -202,7 +275,7 @@ export default function HomePage() {
           
           <motion.p 
             style={{ 
-              color: "#4B5563", 
+              color: "#f1f1f1", 
               fontSize: "1.3rem", 
               maxWidth: "800px", 
               margin: "0 auto 48px",
@@ -223,7 +296,7 @@ export default function HomePage() {
           >
             <motion.button 
               style={{ 
-                backgroundColor: "#1E3A8A", 
+                backgroundColor: "#DC2626", 
                 color: "#fff", 
                 padding: "16px 40px", 
                 borderRadius: "50px",
@@ -231,7 +304,7 @@ export default function HomePage() {
                 fontSize: "1.2rem",
                 fontWeight: "600",
                 cursor: "pointer",
-                boxShadow: "0 4px 14px rgba(30, 58, 138, 0.4)",
+                boxShadow: "0 4px 14px rgba(220, 38, 38, 0.4)",
                 marginBottom: "40px"
               }}
               variants={buttonVariants}
@@ -240,6 +313,50 @@ export default function HomePage() {
             >
               Start Investing Now
             </motion.button>
+          </motion.div>
+          
+          {/* Visual indicator */}
+          <motion.div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              gap: "20px",
+              marginBottom: "30px"
+            }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            transition={{ delay: 0.8, duration: 0.5 }}
+          >
+            <motion.div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <FaChartBar size={20} color="#DC2626" />
+              <span style={{ color: "#f1f1f1" }}>High Performance</span>
+            </motion.div>
+            <motion.div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <FaRegChartBar size={20} color="#1E3A8A" />
+              <span style={{ color: "#f1f1f1" }}>Low Risk</span>
+            </motion.div>
+            <motion.div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px"
+              }}
+            >
+              <FaLightbulb size={20} color="#DC2626" />
+              <span style={{ color: "#f1f1f1" }}>Smart Strategy</span>
+            </motion.div>
           </motion.div>
         </motion.div>
         
@@ -255,7 +372,7 @@ export default function HomePage() {
             marginBottom: "80px"
           }}
         >
-          {features.map((feature, index) => {
+          {features.slice(0, 3).map((feature, index) => {
             // Use intersection observer for each feature card
             const [ref, inView] = useInView({
               threshold: 0.2,
@@ -268,39 +385,39 @@ export default function HomePage() {
                 key={index} 
                 variants={itemVariants}
                 style={{ 
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.08)", 
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.3)", 
                   padding: "30px", 
                   borderRadius: "16px", 
-                  backgroundColor: "rgba(255, 255, 255, 0.9)",
+                  backgroundColor: "rgba(17, 24, 39, 0.8)",
                   backdropFilter: "blur(10px)",
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
                   justifyContent: "space-between",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  border: "1px solid rgba(30, 58, 138, 0.2)",
                   transform: inView ? "translateY(0)" : "translateY(50px)",
                   opacity: inView ? 1 : 0,
                   transition: "all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1) " + index * 0.1 + "s"
                 }}
                 whileHover={{ 
                   y: -10, 
-                  boxShadow: "0 20px 40px rgba(0,0,0,0.12)",
-                  backgroundColor: "rgba(255, 255, 255, 1)"
+                  boxShadow: "0 20px 40px rgba(220, 38, 38, 0.2)",
+                  backgroundColor: "rgba(17, 24, 39, 0.95)"
                 }}
               >
                 <div>
                   <div style={{ 
-                    color: "#3B82F6", 
+                    color: index % 2 === 0 ? "#DC2626" : "#1E3A8A", 
                     marginBottom: "20px",
                     display: "inline-block",
                     padding: "16px",
                     borderRadius: "12px",
-                    background: "rgba(59, 130, 246, 0.1)"
+                    background: index % 2 === 0 ? "rgba(220, 38, 38, 0.1)" : "rgba(30, 58, 138, 0.1)"
                   }}>
                     {feature.icon}
                   </div>
                   <h2 style={{ 
-                    color: "#1E3A8A", 
+                    color: "#ffffff", 
                     marginBottom: "16px",
                     fontSize: "1.5rem",
                     fontWeight: "700"
@@ -308,7 +425,7 @@ export default function HomePage() {
                     {feature.title}
                   </h2>
                   <p style={{ 
-                    color: "#4B5563", 
+                    color: "#d1d5db", 
                     marginBottom: "24px",
                     lineHeight: "1.6"
                   }}>
@@ -318,14 +435,16 @@ export default function HomePage() {
                 <motion.button 
                   style={{ 
                     marginTop: "16px", 
-                    backgroundColor: "#3B82F6", 
+                    backgroundColor: index % 2 === 0 ? "#DC2626" : "#1E3A8A", 
                     color: "#fff", 
                     padding: "12px 24px", 
                     borderRadius: "8px",
                     border: "none",
                     cursor: "pointer",
                     fontWeight: "600",
-                    boxShadow: "0 4px 6px rgba(59, 130, 246, 0.3)"
+                    boxShadow: index % 2 === 0 
+                      ? "0 4px 6px rgba(220, 38, 38, 0.3)" 
+                      : "0 4px 6px rgba(30, 58, 138, 0.3)"
                   }} 
                   variants={buttonVariants}
                   whileHover="hover"
@@ -339,6 +458,123 @@ export default function HomePage() {
           })}
         </motion.div>
         
+        {/* Centered Creator Incentive Model */}
+        <motion.div
+          variants={containerVariants}
+          initial="hidden"
+          animate="visible"
+          style={{
+            display: "flex",
+            justifyContent: "center",
+            marginBottom: "80px",
+            padding: "0 20px"
+          }}
+        >
+          {(() => {
+            const feature = features[3]; // Creator Incentive Model
+            const [ref, inView] = useInView({
+              threshold: 0.2,
+              triggerOnce: true
+            });
+            
+            return (
+              <motion.div 
+                ref={ref}
+                variants={itemVariants}
+                style={{ 
+                  boxShadow: "0 10px 30px rgba(0,0,0,0.3)", 
+                  padding: "40px", 
+                  borderRadius: "16px", 
+                  backgroundColor: "rgba(17, 24, 39, 0.8)",
+                  backdropFilter: "blur(10px)",
+                  maxWidth: "800px",
+                  width: "100%",
+                  display: "flex",
+                  flexDirection: "column",
+                  justifyContent: "space-between",
+                  border: "1px solid rgba(220, 38, 38, 0.3)",
+                  transform: inView ? "translateY(0)" : "translateY(50px)",
+                  opacity: inView ? 1 : 0,
+                  transition: "all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1) 0.3s"
+                }}
+                whileHover={{ 
+                  y: -10, 
+                  boxShadow: "0 20px 40px rgba(220, 38, 38, 0.3)",
+                  backgroundColor: "rgba(17, 24, 39, 0.95)"
+                }}
+              >
+                <div style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                  textAlign: "center"
+                }}>
+                  <div style={{ 
+                    color: "#DC2626", 
+                    marginBottom: "20px",
+                    display: "inline-block",
+                    padding: "20px",
+                    borderRadius: "50%",
+                    background: "rgba(220, 38, 38, 0.1)"
+                  }}>
+                    {feature.icon}
+                  </div>
+                  <h2 style={{ 
+                    color: "#ffffff", 
+                    marginBottom: "16px",
+                    fontSize: "2rem",
+                    fontWeight: "700"
+                  }}>
+                    {feature.title}
+                  </h2>
+                  <p style={{ 
+                    color: "#d1d5db", 
+                    marginBottom: "24px",
+                    lineHeight: "1.6",
+                    fontSize: "1.1rem",
+                    maxWidth: "600px"
+                  }}>
+                    {feature.description}
+                  </p>
+                  <p style={{ 
+                    color: "#9ca3af", 
+                    marginBottom: "30px",
+                    lineHeight: "1.8",
+                    maxWidth: "700px"
+                  }}>
+                    {feature.details}
+                  </p>
+                </div>
+                <div style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  marginTop: "20px"
+                }}>
+                  <motion.button 
+                    style={{ 
+                      backgroundColor: "#DC2626", 
+                      color: "#fff", 
+                      padding: "14px 32px", 
+                      borderRadius: "8px",
+                      border: "none",
+                      cursor: "pointer",
+                      fontWeight: "600",
+                      fontSize: "1.1rem",
+                      boxShadow: "0 4px 6px rgba(220, 38, 38, 0.3)"
+                    }} 
+                    variants={buttonVariants}
+                    whileHover="hover"
+                    whileTap="tap"
+                    onClick={() => handleLearnMore(feature)}
+                  >
+                    Learn More About Creator Earnings
+                  </motion.button>
+                </div>
+              </motion.div>
+            );
+          })()}
+        </motion.div>
+        
         {/* Call to action section */}
         <motion.div 
           style={{ 
@@ -347,8 +583,9 @@ export default function HomePage() {
             marginBottom: "60px",
             padding: "60px 40px",
             borderRadius: "24px",
-            background: "linear-gradient(135deg, #1E3A8A 0%, #3B82F6 100%)",
-            boxShadow: "0 20px 40px rgba(30, 58, 138, 0.3)"
+            background: "linear-gradient(135deg, #000000 0%, #1E3A8A 100%)",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.5)",
+            border: "1px solid rgba(30, 58, 138, 0.3)"
           }}
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -373,15 +610,15 @@ export default function HomePage() {
           </p>
           <motion.button 
             style={{ 
-              backgroundColor: "#fff", 
-              color: "#1E3A8A", 
+              backgroundColor: "#DC2626", 
+              color: "#fff", 
               padding: "16px 40px", 
               borderRadius: "50px",
               border: "none",
               fontSize: "1.2rem",
               fontWeight: "700",
               cursor: "pointer",
-              boxShadow: "0 4px 14px rgba(0, 0, 0, 0.2)"
+              boxShadow: "0 4px 14px rgba(220, 38, 38, 0.4)"
             }}
             variants={buttonVariants}
             whileHover="hover"
@@ -402,7 +639,7 @@ export default function HomePage() {
               left: 0, 
               right: 0, 
               bottom: 0, 
-              backgroundColor: "rgba(0,0,0,0.7)", 
+              backgroundColor: "rgba(0,0,0,0.8)", 
               display: "flex", 
               alignItems: "center", 
               justifyContent: "center",
@@ -417,14 +654,15 @@ export default function HomePage() {
           >
             <motion.div 
               style={{ 
-                backgroundColor: "#fff", 
+                backgroundColor: "#111827", 
                 padding: "40px", 
                 borderRadius: "20px", 
-                boxShadow: "0 25px 50px rgba(0,0,0,0.3)",
+                boxShadow: "0 25px 50px rgba(0,0,0,0.5)",
                 maxWidth: "700px",
                 width: "100%",
                 position: "relative",
-                overflow: "hidden"
+                overflow: "hidden",
+                border: "1px solid rgba(30, 58, 138, 0.2)"
               }}
               initial={{ scale: 0.8, y: 50, opacity: 0 }}
               animate={{ scale: 1, y: 0, opacity: 1 }}
@@ -438,24 +676,24 @@ export default function HomePage() {
                 left: 0, 
                 right: 0, 
                 height: "8px", 
-                background: "linear-gradient(to right, #3B82F6, #10B981)" 
+                background: "linear-gradient(to right, #DC2626, #1E3A8A)" 
               }} />
               
               <div style={{ marginBottom: "24px" }}>
                 <div style={{ 
-                  color: "#3B82F6", 
+                  color: "#DC2626", 
                   marginBottom: "20px",
                   display: "inline-block",
                   padding: "16px",
                   borderRadius: "12px",
-                  background: "rgba(59, 130, 246, 0.1)"
+                  background: "rgba(220, 38, 38, 0.1)"
                 }}>
                   {selectedFeature?.icon}
                 </div>
               </div>
               
               <h3 style={{ 
-                color: "#1E3A8A", 
+                color: "#ffffff", 
                 fontSize: "1.8rem", 
                 marginBottom: "20px",
                 fontWeight: "700"
@@ -464,7 +702,7 @@ export default function HomePage() {
               </h3>
               
               <p style={{ 
-                color: "#1F2937", 
+                color: "#d1d5db", 
                 fontWeight: "600", 
                 marginBottom: "20px",
                 fontSize: "1.1rem"
@@ -473,7 +711,7 @@ export default function HomePage() {
               </p>
               
               <p style={{ 
-                color: "#4B5563", 
+                color: "#9ca3af", 
                 lineHeight: "1.8", 
                 marginBottom: "30px",
                 fontSize: "1rem"
@@ -488,8 +726,8 @@ export default function HomePage() {
               }}>
                 <motion.button 
                   style={{ 
-                    backgroundColor: "#E5E7EB", 
-                    color: "#1F2937", 
+                    backgroundColor: "#374151", 
+                    color: "#ffffff", 
                     padding: "12px 28px", 
                     borderRadius: "8px",
                     border: "none",
@@ -506,14 +744,14 @@ export default function HomePage() {
                 
                 <motion.button 
                   style={{ 
-                    backgroundColor: "#10B981", 
+                    backgroundColor: "#DC2626", 
                     color: "#fff", 
                     padding: "12px 28px", 
                     borderRadius: "8px",
                     border: "none",
                     fontWeight: "600",
                     cursor: "pointer",
-                    boxShadow: "0 4px 6px rgba(16, 185, 129, 0.3)"
+                    boxShadow: "0 4px 6px rgba(220, 38, 38, 0.3)"
                   }}
                   variants={buttonVariants}
                   whileHover="hover"
