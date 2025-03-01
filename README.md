@@ -1,4 +1,4 @@
-# Momentum Market
+# OptiVest
 
 A modern web application for investing in multi-asset baskets.
 
