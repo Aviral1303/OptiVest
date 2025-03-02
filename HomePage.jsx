@@ -1,7 +1,19 @@
-import React, { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
-import { useInView } from "react-intersection-observer";
-import { FaChartLine, FaExchangeAlt, FaShieldAlt, FaCoins, FaLightbulb, FaChartBar, FaRegChartBar } from "react-icons/fa";
+import React, { useState, useEffect, useRef } from 'react';
+import { motion, AnimatePresence, useAnimation } from 'framer-motion';
+import { useInView } from 'react-intersection-observer';
+import { 
+  FaLock, 
+  FaChartLine, 
+  FaShieldAlt, 
+  FaChartBar, 
+  FaRegChartBar, 
+  FaLightbulb, 
+  FaExchangeAlt, 
+  FaBalanceScale,
+  FaDatabase,
+  FaProjectDiagram,
+  FaRobot
+} from 'react-icons/fa';
 
 export default function HomePage() {
   const [selectedFeature, setSelectedFeature] = useState(null);
@@ -30,28 +42,28 @@ export default function HomePage() {
 
   const features = [
     {
-      icon: <FaShieldAlt size={40} />,
       title: "Limited Disclosure with Trust Signals",
-      description: "Tiered disclosure model with performance badges to build trust without full transparency.",
-      details: "Our innovative Semi-Private Disclosure Model offers tiered access to basket information. Free users see asset classes and percentage allocations, while paid subscribers gain insights into detailed components. We build trust through performance badges (low-risk, high-growth, etc.) based on verified historical performance, allowing investors to follow successful traders without requiring complete transparency. This creates an additional revenue stream through premium subscriptions while protecting creators' strategies."
+      description: "Maintain privacy while building trust with counterparties through selective disclosure.",
+      details: "Our platform allows you to share only the necessary information about your portfolio while still providing sufficient trust signals to counterparties. This selective disclosure mechanism protects your proprietary strategies while enabling efficient transactions.",
+      icon: <FaLock size={30} />
     },
     {
-      icon: <FaExchangeAlt size={40} />,
       title: "Multi-Asset Class Flexibility",
-      description: "Combine stocks, ETFs, crypto, commodities, REITs, bonds, and alternative assets in one basket.",
-      details: "Create diversified investment baskets that break traditional portfolio boundaries. Mix and match across asset classes to build truly personalized investment strategies. Whether you're looking for stability with bonds and blue-chip stocks, or seeking growth with emerging market ETFs and carefully selected cryptocurrencies, our platform gives you unprecedented flexibility to design baskets that match your investment philosophy and goals."
+      description: "Seamlessly integrate stocks, ETFs, crypto, commodities, and more in one unified platform.",
+      details: "OptiVest's advanced multi-asset framework allows you to build truly diversified portfolios across traditional and alternative asset classes. Our platform handles the complexities of different market structures, trading hours, and data formats to provide a unified view of your investments.",
+      icon: <FaExchangeAlt size={30} />
     },
     {
-      icon: <FaChartLine size={40} />,
       title: "Dynamic Risk Controls",
-      description: "Set risk caps and stop-loss alerts for personalized risk management.",
-      details: "Take control of your investment risk with our advanced risk management tools. Set personalized 'risk caps' to limit exposure to specific asset classes (e.g., max 20% in crypto) within any basket you invest in. Our platform automatically implements stop-loss features and sends real-time alerts if a basket's risk metrics exceed your defined thresholds. This appeals particularly to cautious investors who want the benefits of diversification with guardrails against excessive risk."
+      description: "Implement sophisticated risk management with real-time monitoring and automated safeguards.",
+      details: "Our platform continuously monitors your portfolio for risk exposures across multiple dimensions including volatility, correlation shifts, liquidity constraints, and tail events. Automated circuit breakers can be configured to protect your investments during market turbulence.",
+      icon: <FaShieldAlt size={30} />
     },
     {
-      icon: <FaCoins size={40} />,
-      title: "Creator Incentive Model",
-      description: "Earn base earnings, performance bonuses, and referral commissions.",
-      details: "Our three-tiered earnings model rewards basket creators generously. Earn Base Earnings as a percentage of returns from investors using your basket. Unlock Performance Bonuses when your baskets outperform market benchmarks. Generate Referral Commissions by bringing new users to the platform. This comprehensive incentive structure encourages creators to develop high-performing baskets, maintain active engagement, and help grow our community."
+      title: "Advanced Portfolio Analytics",
+      description: "Gain deeper insights with institutional-grade analytics that reveal hidden risks and opportunities.",
+      details: "Access sophisticated analytics typically available only to institutional investors. Our platform provides factor analysis, stress testing, scenario modeling, and performance attribution to help you understand the true drivers of your portfolio's performance and risk.",
+      icon: <FaChartLine size={30} />
     }
   ];
 
@@ -72,30 +84,23 @@ export default function HomePage() {
   };
 
   const itemVariants = {
-    hidden: { y: 20, opacity: 0 },
+    hidden: { opacity: 0, y: 20 },
     visible: {
-      y: 0,
       opacity: 1,
+      y: 0,
       transition: {
-        type: "spring",
-        stiffness: 100
+        duration: 0.5
       }
     }
   };
 
   const buttonVariants = {
-    hover: {
-      scale: 1.05,
-      boxShadow: "0px 8px 15px rgba(0, 0, 0, 0.2)",
-      transition: {
-        type: "spring",
-        stiffness: 400,
-        damping: 10
-      }
+    hover: { 
+      scale: 1.05, 
+      boxShadow: "0 10px 20px rgba(0, 0, 0, 0.3)",
+      transition: { duration: 0.3 }
     },
-    tap: {
-      scale: 0.95
-    }
+    tap: { scale: 0.95 }
   };
 
   // Interactive background gradient based on mouse position
@@ -223,7 +228,8 @@ export default function HomePage() {
 
   // Parallax effect for header
   const headerParallax = {
-    y: scrollY * 0.3
+    x: mousePosition.x / 100,
+    y: mousePosition.y / 100
   };
 
   return (
@@ -270,7 +276,7 @@ export default function HomePage() {
             }}
             animate={headerParallax}
           >
-            Invest Smarter with Multi-Asset Baskets
+            Optimize Your Portfolio with Multi-Asset Baskets
           </motion.h1>
           
           <motion.p 
@@ -285,8 +291,8 @@ export default function HomePage() {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3, duration: 0.8 }}
           >
-            Create, share, and invest in diversified asset baskets. Combine stocks, ETFs, crypto, and more in one place. 
-            Build your own investment baskets and earn when others follow your strategy.
+            Discover the power of true diversification with OptiVest's multi-asset investment platform. 
+            Combine stocks, ETFs, crypto, commodities, and more in one place for optimized risk-adjusted returns.
           </motion.p>
           
           <motion.div
@@ -315,13 +321,14 @@ export default function HomePage() {
             </motion.button>
           </motion.div>
           
-          {/* Visual indicator */}
+          {/* Enhanced Visual indicator for multi-asset capabilities */}
           <motion.div
             style={{
               display: "flex",
               justifyContent: "center",
               gap: "20px",
-              marginBottom: "30px"
+              marginBottom: "30px",
+              flexWrap: "wrap"
             }}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
@@ -331,31 +338,71 @@ export default function HomePage() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                backgroundColor: "rgba(30, 58, 138, 0.2)",
+                padding: "8px 16px",
+                borderRadius: "50px"
               }}
+              whileHover={{ scale: 1.05 }}
             >
               <FaChartBar size={20} color="#DC2626" />
-              <span style={{ color: "#f1f1f1" }}>High Performance</span>
+              <span style={{ color: "#f1f1f1" }}>Optimized Returns</span>
             </motion.div>
             <motion.div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                backgroundColor: "rgba(220, 38, 38, 0.2)",
+                padding: "8px 16px",
+                borderRadius: "50px"
               }}
+              whileHover={{ scale: 1.05 }}
             >
               <FaRegChartBar size={20} color="#1E3A8A" />
-              <span style={{ color: "#f1f1f1" }}>Low Risk</span>
+              <span style={{ color: "#f1f1f1" }}>Reduced Volatility</span>
             </motion.div>
             <motion.div
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "10px"
+                gap: "10px",
+                backgroundColor: "rgba(4, 120, 87, 0.2)",
+                padding: "8px 16px",
+                borderRadius: "50px"
               }}
+              whileHover={{ scale: 1.05 }}
             >
-              <FaLightbulb size={20} color="#DC2626" />
-              <span style={{ color: "#f1f1f1" }}>Smart Strategy</span>
+              <FaLightbulb size={20} color="#F59E0B" />
+              <span style={{ color: "#f1f1f1" }}>Advanced Analytics</span>
+            </motion.div>
+            <motion.div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                backgroundColor: "rgba(147, 51, 234, 0.2)",
+                padding: "8px 16px",
+                borderRadius: "50px"
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <FaExchangeAlt size={20} color="#047857" />
+              <span style={{ color: "#f1f1f1" }}>Multi-Asset Diversification</span>
+            </motion.div>
+            <motion.div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "10px",
+                backgroundColor: "rgba(236, 72, 153, 0.2)",
+                padding: "8px 16px",
+                borderRadius: "50px"
+              }}
+              whileHover={{ scale: 1.05 }}
+            >
+              <FaBalanceScale size={20} color="#EC4899" />
+              <span style={{ color: "#f1f1f1" }}>Risk-Adjusted Performance</span>
             </motion.div>
           </motion.div>
         </motion.div>
@@ -372,7 +419,7 @@ export default function HomePage() {
             marginBottom: "80px"
           }}
         >
-          {features.slice(0, 3).map((feature, index) => {
+          {features.map((feature, index) => {
             // Use intersection observer for each feature card
             const [ref, inView] = useInView({
               threshold: 0.2,
@@ -458,121 +505,205 @@ export default function HomePage() {
           })}
         </motion.div>
         
-        {/* Centered Creator Incentive Model */}
+        {/* Interactive Portfolio Visualization - Enhanced for multi-asset */}
         <motion.div
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
           style={{
-            display: "flex",
-            justifyContent: "center",
+            marginTop: "60px",
             marginBottom: "80px",
-            padding: "0 20px"
+            padding: "40px",
+            borderRadius: "20px",
+            backgroundColor: "rgba(17, 24, 39, 0.7)",
+            backdropFilter: "blur(10px)",
+            boxShadow: "0 20px 40px rgba(0, 0, 0, 0.4)",
+            border: "1px solid rgba(30, 58, 138, 0.2)"
           }}
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
         >
-          {(() => {
-            const feature = features[3]; // Creator Incentive Model
-            const [ref, inView] = useInView({
-              threshold: 0.2,
-              triggerOnce: true
-            });
-            
-            return (
-              <motion.div 
-                ref={ref}
-                variants={itemVariants}
-                style={{ 
-                  boxShadow: "0 10px 30px rgba(0,0,0,0.3)", 
-                  padding: "40px", 
-                  borderRadius: "16px", 
-                  backgroundColor: "rgba(17, 24, 39, 0.8)",
-                  backdropFilter: "blur(10px)",
-                  maxWidth: "800px",
-                  width: "100%",
-                  display: "flex",
-                  flexDirection: "column",
-                  justifyContent: "space-between",
-                  border: "1px solid rgba(220, 38, 38, 0.3)",
-                  transform: inView ? "translateY(0)" : "translateY(50px)",
-                  opacity: inView ? 1 : 0,
-                  transition: "all 0.6s cubic-bezier(0.17, 0.55, 0.55, 1) 0.3s"
-                }}
-                whileHover={{ 
-                  y: -10, 
-                  boxShadow: "0 20px 40px rgba(220, 38, 38, 0.3)",
-                  backgroundColor: "rgba(17, 24, 39, 0.95)"
-                }}
-              >
-                <div style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  alignItems: "center",
-                  textAlign: "center"
-                }}>
-                  <div style={{ 
-                    color: "#DC2626", 
-                    marginBottom: "20px",
-                    display: "inline-block",
-                    padding: "20px",
-                    borderRadius: "50%",
-                    background: "rgba(220, 38, 38, 0.1)"
-                  }}>
-                    {feature.icon}
-                  </div>
-                  <h2 style={{ 
-                    color: "#ffffff", 
-                    marginBottom: "16px",
-                    fontSize: "2rem",
-                    fontWeight: "700"
-                  }}>
-                    {feature.title}
-                  </h2>
-                  <p style={{ 
-                    color: "#d1d5db", 
-                    marginBottom: "24px",
-                    lineHeight: "1.6",
-                    fontSize: "1.1rem",
-                    maxWidth: "600px"
-                  }}>
-                    {feature.description}
-                  </p>
-                  <p style={{ 
-                    color: "#9ca3af", 
-                    marginBottom: "30px",
-                    lineHeight: "1.8",
-                    maxWidth: "700px"
-                  }}>
-                    {feature.details}
-                  </p>
-                </div>
-                <div style={{
+          <h2 style={{
+            textAlign: "center",
+            fontSize: "2rem",
+            fontWeight: "700",
+            marginBottom: "40px",
+            color: "#ffffff"
+          }}>
+            Advanced Multi-Asset Portfolio Visualization
+          </h2>
+          
+          <div style={{
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            gap: "30px"
+          }}>
+            <div style={{
+              display: "flex",
+              flexWrap: "wrap",
+              justifyContent: "center",
+              gap: "20px",
+              marginBottom: "30px"
+            }}>
+              {/* Asset Class Allocation Visualization - Enhanced with more asset classes */}
+              <motion.div
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  position: "relative",
                   display: "flex",
                   justifyContent: "center",
-                  marginTop: "20px"
+                  alignItems: "center"
+                }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                  {/* Donut chart segments - Updated with more asset classes */}
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#1E3A8A" strokeWidth="40" strokeDasharray="125 628" strokeDashoffset="0" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#DC2626" strokeWidth="40" strokeDasharray="94 628" strokeDashoffset="125" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#047857" strokeWidth="40" strokeDasharray="78 628" strokeDashoffset="219" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#9333EA" strokeWidth="40" strokeDasharray="63 628" strokeDashoffset="297" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#F59E0B" strokeWidth="40" strokeDasharray="47 628" strokeDashoffset="360" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#EC4899" strokeWidth="40" strokeDasharray="31 628" strokeDashoffset="407" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#0EA5E9" strokeWidth="40" strokeDasharray="31 628" strokeDashoffset="438" />
+                  <circle cx="150" cy="150" r="100" fill="none" stroke="#84CC16" strokeWidth="40" strokeDasharray="31 628" strokeDashoffset="469" />
+                  
+                  {/* Center circle */}
+                  <circle cx="150" cy="150" r="60" fill="#111827" />
+                  <text x="150" y="150" textAnchor="middle" dominantBaseline="middle" fill="#ffffff" fontSize="14" fontWeight="600">Asset Allocation</text>
+                </svg>
+                
+                {/* Legend - Updated with more asset classes */}
+                <div style={{
+                  position: "absolute",
+                  bottom: "-120px",
+                  left: "0",
+                  right: "0",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: "10px"
                 }}>
-                  <motion.button 
-                    style={{ 
-                      backgroundColor: "#DC2626", 
-                      color: "#fff", 
-                      padding: "14px 32px", 
-                      borderRadius: "8px",
-                      border: "none",
-                      cursor: "pointer",
-                      fontWeight: "600",
-                      fontSize: "1.1rem",
-                      boxShadow: "0 4px 6px rgba(220, 38, 38, 0.3)"
-                    }} 
-                    variants={buttonVariants}
-                    whileHover="hover"
-                    whileTap="tap"
-                    onClick={() => handleLearnMore(feature)}
-                  >
-                    Learn More About Creator Earnings
-                  </motion.button>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#1E3A8A", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Stocks (20%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#DC2626", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>ETFs (15%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#047857", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Crypto (12.5%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#9333EA", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Bonds (10%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#F59E0B", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Commodities (7.5%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#EC4899", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Real Estate (5%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#0EA5E9", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Forex (5%)</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#84CC16", borderRadius: "2px" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Alternatives (5%)</span>
+                  </div>
                 </div>
               </motion.div>
-            );
-          })()}
+              
+              {/* Risk-Return Visualization */}
+              <motion.div
+                style={{
+                  width: "300px",
+                  height: "300px",
+                  position: "relative"
+                }}
+                whileHover={{ scale: 1.05 }}
+              >
+                <svg width="300" height="300" viewBox="0 0 300 300">
+                  {/* Axes */}
+                  <line x1="50" y1="250" x2="250" y2="250" stroke="#6B7280" strokeWidth="2" />
+                  <line x1="50" y1="50" x2="50" y2="250" stroke="#6B7280" strokeWidth="2" />
+                  
+                  {/* Axis labels */}
+                  <text x="150" y="280" textAnchor="middle" fill="#9CA3AF" fontSize="12">Risk</text>
+                  <text x="20" y="150" textAnchor="middle" fill="#9CA3AF" fontSize="12" transform="rotate(-90, 20, 150)">Return</text>
+                  
+                  {/* Grid lines */}
+                  <line x1="50" y1="200" x2="250" y2="200" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="50" y1="150" x2="250" y2="150" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="50" y1="100" x2="250" y2="100" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="100" y1="50" x2="100" y2="250" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="150" y1="50" x2="150" y2="250" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  <line x1="200" y1="50" x2="200" y2="250" stroke="#374151" strokeWidth="1" strokeDasharray="5,5" />
+                  
+                  {/* Efficient frontier curve */}
+                  <path d="M70,220 Q120,120 230,80" fill="none" stroke="#1E3A8A" strokeWidth="2" strokeDasharray="5,5" />
+                  
+                  {/* Portfolio points */}
+                  <circle cx="90" cy="200" r="8" fill="#DC2626" />
+                  <circle cx="130" cy="170" r="8" fill="#047857" />
+                  <circle cx="170" cy="130" r="10" fill="#F59E0B" stroke="#ffffff" strokeWidth="2" />
+                  <circle cx="210" cy="100" r="8" fill="#9333EA" />
+                  
+                  {/* Legend */}
+                  <text x="150" y="40" textAnchor="middle" fill="#ffffff" fontSize="14" fontWeight="600">Risk-Return Profile</text>
+                </svg>
+                
+                {/* Legend */}
+                <div style={{
+                  position: "absolute",
+                  bottom: "-80px",
+                  left: "0",
+                  right: "0",
+                  display: "flex",
+                  flexWrap: "wrap",
+                  justifyContent: "center",
+                  gap: "10px"
+                }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#DC2626", borderRadius: "50%" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Conservative</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#047857", borderRadius: "50%" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Balanced</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#F59E0B", borderRadius: "50%" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Optimized</span>
+                  </div>
+                  <div style={{ display: "flex", alignItems: "center", gap: "5px" }}>
+                    <div style={{ width: "12px", height: "12px", backgroundColor: "#9333EA", borderRadius: "50%" }}></div>
+                    <span style={{ color: "#d1d5db", fontSize: "12px" }}>Aggressive</span>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
+            
+            <motion.p
+              style={{
+                color: "#d1d5db",
+                textAlign: "center",
+                maxWidth: "800px",
+                margin: "0 auto",
+                lineHeight: "1.6"
+              }}
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ delay: 0.5, duration: 0.8 }}
+            >
+              Our advanced multi-asset portfolio visualization tools help you understand the true composition and performance characteristics of your investments across all asset classes. 
+              Optimize your asset allocation for the perfect balance of risk and return based on your investment goals, with support for stocks, ETFs, crypto, commodities, bonds, real estate, forex, and alternative investments.
+            </motion.p>
+          </div>
         </motion.div>
         
         {/* Call to action section */}
@@ -597,7 +728,7 @@ export default function HomePage() {
             fontSize: "2.2rem",
             fontWeight: "700"
           }}>
-            Ready to revolutionize your investment strategy?
+            Ready to optimize your investment portfolio?
           </h2>
           <p style={{ 
             color: "rgba(255, 255, 255, 0.9)", 
@@ -606,7 +737,7 @@ export default function HomePage() {
             maxWidth: "700px",
             margin: "0 auto 32px"
           }}>
-            Join thousands of investors creating and sharing multi-asset baskets.
+            Experience the power of institutional-grade portfolio analytics and true multi-asset diversification.
           </p>
           <motion.button 
             style={{ 
@@ -624,7 +755,7 @@ export default function HomePage() {
             whileHover="hover"
             whileTap="tap"
           >
-            Get Started Now
+            Start Optimizing Now
           </motion.button>
         </motion.div>
       </div>
