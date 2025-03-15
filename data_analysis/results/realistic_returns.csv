@@ -1,0 +1,6 @@
+BasketNumber,Name,ExpectedReturn,ReturnFormatted
+1,Conservative High Return,0.08,8.0%
+2,Moderate-Conservative Return,0.095,9.5%
+3,Balanced High Return,0.115,11.5%
+4,Growth-Oriented Return,0.135,13.5%
+5,Aggressive High Return,0.16,16.0%
