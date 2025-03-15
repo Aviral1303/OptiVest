@@ -20,6 +20,8 @@
       overflow-x: hidden;
       background-color: #000000;
       color: #ffffff;
+      opacity: 0; /* Start invisible for fade-in effect */
+      transition: opacity 0.5s ease; /* Smooth transition for opacity */
       background-image: 
         radial-gradient(circle at 20% 35%, rgba(30, 58, 138, 0.15) 0%, transparent 50%),
         radial-gradient(circle at 80% 10%, rgba(220, 38, 38, 0.1) 0%, transparent 50%),
@@ -511,7 +513,7 @@
         Discover the power of true diversification with OptiVest's comprehensive multi-asset investment platform. 
         Combine stocks, ETFs, crypto, bonds, commodities, real estate, forex, and alternatives in one unified platform for superior risk-adjusted returns.
       </p>
-      <button class="cta-button">Start Investing Now</button>
+      <button class="cta-button" onclick="navigateToVisualizations()">Start Investing Now</button>
       
       <div class="features">
         <div class="feature-tag blue">
@@ -743,8 +745,25 @@
       <p class="cta-description">
         Experience the power of institutional-grade portfolio analytics and true multi-asset diversification with OptiVest's comprehensive platform.
       </p>
-      <button class="cta-button">Start Optimizing Now</button>
+      <button class="cta-button" onclick="navigateToVisualizations()">Start Optimizing Now</button>
     </div>
   </div>
 </body>
+<script>
+  function navigateToVisualizations() {
+    // Add a smooth transition effect
+    document.body.style.opacity = 0;
+    document.body.style.transition = "opacity 0.5s ease";
+    
+    // Wait for the transition to complete before navigating
+    setTimeout(() => {
+      window.location.href = "/data_analysis/visualizations/index.html";
+    }, 500);
+  }
+
+  // Add smooth page entry transition
+  document.addEventListener('DOMContentLoaded', function() {
+    document.body.style.opacity = 1;
+  });
+</script>
 </html> 
