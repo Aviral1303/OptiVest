@@ -24,4 +24,4 @@ jobs:
         with:
           folder: dist
           branch: gh-pages
-          clean: true 
+          clean: false
